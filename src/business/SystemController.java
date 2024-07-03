@@ -26,6 +26,25 @@ public class SystemController implements ControllerInterface {
 	}
 
 	@Override
+	public LibraryMember addMember(LibraryMember libraryMember) throws RessourceException {
+		DataAccess da = new DataAccessFacade();
+		da.saveNewMember(libraryMember);
+		return libraryMember;
+	}
+
+
+	public void checkoutBook(String memberId, String isbnNumber){
+		DataAccess da = new DataAccessFacade();
+        try {
+            da.checkoutBook(memberId, isbnNumber);
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        } catch (RessourceException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+	@Override
 	public void addAuthUser(User user) {
 		DataAccess da = new DataAccessFacade();
 		da.saveAuth(user);
@@ -38,18 +57,10 @@ public class SystemController implements ControllerInterface {
 	}
 
 	@Override
-	public User addUser(User user) {
+	public User addUser(User user) throws RessourceException {
 		DataAccess da = new DataAccessFacade();
 		da.saveUser(user);
 		return user;
-	}
-
-
-	@Override
-	public LibraryMember addMember(LibraryMember libraryMember) {
-		DataAccess da = new DataAccessFacade();
-		da.saveNewMember(libraryMember);
-		return libraryMember;
 	}
 
 	@Override
