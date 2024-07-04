@@ -11,19 +11,19 @@ public class AdminWindow extends JFrame implements LibWindow {
 
     private JPanel mainPanel;
     private JButton addMemberButton;
-    private JButton addBookCopyButton;
+    private JButton addBookButton;
 
     private AdminWindow() {}
 
     @Override
     public void init() {
         mainPanel = new JPanel(new GridLayout(2, 1));
-        addMemberButton = new JButton("Add Member");
+        addMemberButton = new JButton("Add New Library Member");
         addMemberButton.addActionListener(new AddMemberListener());
-        addBookCopyButton = new JButton("Add Book Copy");
-        addBookCopyButton.addActionListener(new AddBookCopyListener());
+        addBookButton = new JButton("Add Book Copy");
+        addBookButton.addActionListener(new AddBookListener());
         mainPanel.add(addMemberButton);
-        mainPanel.add(addBookCopyButton);
+        mainPanel.add(addBookButton);
         getContentPane().add(mainPanel);
         setSize(400, 150);
         isInitialized = true;
@@ -38,7 +38,7 @@ public class AdminWindow extends JFrame implements LibWindow {
         }
     }
 
-    class AddBookCopyListener implements ActionListener {
+    class AddBookListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             AddBookCopyWindow.INSTANCE.init();
@@ -57,4 +57,3 @@ public class AdminWindow extends JFrame implements LibWindow {
         isInitialized = val;
     }
 }
-

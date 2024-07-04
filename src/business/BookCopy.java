@@ -2,7 +2,7 @@ package business;
 
 import java.io.Serializable;
 
-/**
+/**x
  * Immutable class
  */
 final public class BookCopy implements Serializable {

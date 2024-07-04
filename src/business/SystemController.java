@@ -26,6 +26,51 @@ public class SystemController implements ControllerInterface {
 	}
 
 	@Override
+	public LibraryMember addMember(LibraryMember libraryMember) throws RessourceException {
+		DataAccess da = new DataAccessFacade();
+		da.saveNewMember(libraryMember);
+		return libraryMember;
+	}
+
+
+	public CheckoutEntry checkoutBook(String memberId, String isbnNumber){
+		DataAccess da = new DataAccessFacade();
+        try {
+            return da.checkoutBook(memberId, isbnNumber);
+
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        } catch (RessourceException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+	public List<CheckoutEntry> getCheckoutEntries() {
+		// Implement this method to retrieve the checkout entries for a given member ID
+		// This might involve fetching the CheckoutRecord for the member and returning the list of entries
+		// Example:
+		DataAccess da = new DataAccessFacade();
+
+		HashMap<String, CheckoutRecord> records = da.readCheckoutRecordMap();
+		List<CheckoutEntry> entriesList= new ArrayList<>();
+		for(CheckoutRecord record : records.values()) {
+			entriesList.addAll(record.getEntries());
+		}
+		return entriesList;
+	}
+
+
+	public Book readBookByIsbn(String isbn) {
+		DataAccess da = new DataAccessFacade();
+		return da.readBookByIsbn(isbn);
+	}
+	public void addBookCopy(String isbn) throws RessourceException {
+		DataAccess da = new DataAccessFacade();
+		da.addBookCopy(isbn);
+	}
+
+
+	@Override
 	public void addAuthUser(User user) {
 		DataAccess da = new DataAccessFacade();
 		da.saveAuth(user);
@@ -38,18 +83,10 @@ public class SystemController implements ControllerInterface {
 	}
 
 	@Override
-	public User addUser(User user) {
+	public User addUser(User user) throws RessourceException {
 		DataAccess da = new DataAccessFacade();
 		da.saveUser(user);
 		return user;
-	}
-
-
-	@Override
-	public LibraryMember addMember(LibraryMember libraryMember) {
-		DataAccess da = new DataAccessFacade();
-		da.saveNewMember(libraryMember);
-		return libraryMember;
 	}
 
 	@Override
